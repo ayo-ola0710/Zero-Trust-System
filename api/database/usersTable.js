@@ -11,6 +11,7 @@ export const initDb = () => {
                 password TEXT NOT NULL,
                 role TEXT CHECK(role IN ('admin', 'staff','guest')) NOT NULL DEFAULT 'guest',
                 status TEXT CHECK(status IN ('active', 'inactive')) NOT NULL DEFAULT 'active',
+                token TEXT,
                 created_at DATETIME DEFAULT CURRENT_TIMESTAMP
             );
 
