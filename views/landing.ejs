@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zero Trust Security System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .bg-animation span {
+            position: absolute;
+            display: block;
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            animation: float 25s infinite;
+            border-radius: 50%;
+        }
+        .bg-animation span:nth-child(1) { left: 10%; animation-delay: 0s; width: 80px; height: 80px; }
+        .bg-animation span:nth-child(2) { left: 20%; animation-delay: 2s; width: 60px; height: 60px; }
+        .bg-animation span:nth-child(3) { left: 30%; animation-delay: 4s; width: 40px; height: 40px; }
+        .bg-animation span:nth-child(4) { left: 40%; animation-delay: 6s; width: 100px; height: 100px; }
+        .bg-animation span:nth-child(5) { left: 50%; animation-delay: 8s; width: 70px; height: 70px; }
+        .bg-animation span:nth-child(6) { left: 60%; animation-delay: 10s; width: 50px; height: 50px; }
+        .bg-animation span:nth-child(7) { left: 70%; animation-delay: 12s; width: 90px; height: 90px; }
+        .bg-animation span:nth-child(8) { left: 80%; animation-delay: 14s; width: 60px; height: 60px; }
+        
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+        }
+        
+        /* Header */
+        .header {
+            position: relative;
+            z-index: 10;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .logo::before {
+            content: "🔒";
+            font-size: 32px;
+        }
+        .header-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        .btn {
+            padding: 12px 28px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+        .btn-outline {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid white;
+            backdrop-filter: blur(10px);
+        }
+        .btn-outline:hover {
+            background: white;
+            color: #667eea;
+            transform: translateY(-2px);
+        }
+        .btn-primary {
+            background: white;
+            color: #667eea;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Hero Section */
+        .hero {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .hero h1 {
+            font-size: 64px;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 24px;
+            line-height: 1.2;
+            animation: fadeInUp 0.8s ease;
+        }
+        .hero p {
+            font-size: 22px;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease 0.4s both;
+        }
+        .hero-buttons .btn {
+            padding: 16px 40px;
+            font-size: 18px;
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Features Section */
+        .features {
+            position: relative;
+            z-index: 10;
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        .feature-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.8s ease both;
+        }
+        .feature-card:nth-child(1) { animation-delay: 0.5s; }
+        .feature-card:nth-child(2) { animation-delay: 0.6s; }
+        .feature-card:nth-child(3) { animation-delay: 0.7s; }
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
+        }
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        .feature-card h3 {
+            font-size: 24px;
+            color: #2d3748;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+        .feature-card p {
+            font-size: 16px;
+            color: #718096;
+            line-height: 1.6;
+        }
+        
+        /* Stats Section */
+        .stats {
+            position: relative;
+            z-index: 10;
+            max-width: 1200px;
+            margin: 80px auto;
+            padding: 60px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            text-align: center;
+        }
+        .stat-item h2 {
+            font-size: 48px;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 8px;
+        }
+        .stat-item p {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+        }
+        
+        /* CTA Section */
+        .cta {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 80px 20px 100px;
+        }
+        .cta h2 {
+            font-size: 42px;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 20px;
+        }
+        .cta p {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 40px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 42px; }
+            .hero p { font-size: 18px; }
+            .header { padding: 20px; }
+            .logo { font-size: 24px; }
+            .features { grid-template-columns: 1fr; }
+            .stats { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    
+    <div class="header">
+        <div class="logo">Zero Trust</div>
+        <div class="header-buttons">
+            <a href="/login" class="btn btn-outline">Login</a>
+            <a href="/login" class="btn btn-primary">Get Started</a>
+        </div>
+    </div>
+    
+    <div class="hero">
+        <h1>Secure Access, Zero Compromise</h1>
+        <p>Enterprise-grade zero trust security architecture that verifies every user and device before granting access to your critical resources.</p>
+        <div class="hero-buttons">
+            <a href="/login" class="btn btn-primary">Start Free Trial</a>
+            <a href="#features" class="btn btn-outline">Learn More</a>
+        </div>
+    </div>
+    
+    <div class="features" id="features">
+        <div class="feature-card">
+            <div class="feature-icon">🔐</div>
+            <h3>Device Authentication</h3>
+            <p>Every device is verified and tracked with unique fingerprints. Only trusted devices can access sensitive resources.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🛡️</div>
+            <h3>Role-Based Access</h3>
+            <p>Granular permission controls ensure users only access what they need. Admin, Staff, and Guest roles with different privileges.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">📊</div>
+            <h3>Real-Time Monitoring</h3>
+            <p>Comprehensive audit logs and analytics track all access attempts and security events in real-time.</p>
+        </div>
+    </div>
+    
+    <div class="stats">
+        <div class="stat-item">
+            <h2>99.9%</h2>
+            <p>Uptime Guarantee</p>
+        </div>
+        <div class="stat-item">
+            <h2>256-bit</h2>
+            <p>Encryption Standard</p>
+        </div>
+        <div class="stat-item">
+            <h2>24/7</h2>
+            <p>Security Monitoring</p>
+        </div>
+        <div class="stat-item">
+            <h2>100%</h2>
+            <p>Compliance Ready</p>
+        </div>
+    </div>
+    
+    <div class="cta">
+        <h2>Ready to Secure Your Organization?</h2>
+        <p>Join thousands of companies protecting their data with Zero Trust architecture</p>
+        <a href="/login" class="btn btn-primary" style="padding: 18px 50px; font-size: 18px;">Get Started Now</a>
+    </div>
+</body>
+</html>
+</div>

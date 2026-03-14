@@ -1,0 +1,233 @@
+<style>
+    .dashboard-header {
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 2px solid #e2e8f0;
+    }
+    .dashboard-header h2 {
+        margin-bottom: 8px;
+    }
+    .dashboard-header p {
+        color: #718096;
+        font-size: 15px;
+    }
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+    .stat-card {
+        background: white;
+        border: 2px solid #e2e8f0;
+        border-radius: 16px;
+        padding: 24px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+    .stat-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        border-color: #667eea;
+    }
+    .stat-card.trusted {
+        border-color: #84fab0;
+        background: linear-gradient(135deg, rgba(132, 250, 176, 0.1) 0%, rgba(143, 211, 244, 0.1) 100%);
+    }
+    .stat-card.untrusted {
+        border-color: #ffeaa7;
+        background: linear-gradient(135deg, rgba(255, 234, 167, 0.2) 0%, rgba(253, 203, 110, 0.2) 100%);
+    }
+    .stat-icon {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+        flex-shrink: 0;
+    }
+    .stat-card.trusted .stat-icon {
+        background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+    }
+    .stat-card.untrusted .stat-icon {
+        background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+    }
+    .stat-content {
+        flex: 1;
+    }
+    .stat-label {
+        font-size: 13px;
+        color: #718096;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 6px;
+    }
+    .stat-value {
+        font-size: 20px;
+        font-weight: 700;
+        color: #2d3748;
+    }
+    .activity-section, .quick-actions {
+        background: white;
+        border-radius: 16px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+    .activity-section h3, .quick-actions h3 {
+        margin-bottom: 20px;
+        color: #2d3748;
+    }
+    .activity-card {
+        display: flex;
+        gap: 16px;
+        padding: 20px;
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+        border-radius: 12px;
+        border-left: 4px solid #667eea;
+    }
+    .activity-icon {
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        flex-shrink: 0;
+    }
+    .activity-content {
+        flex: 1;
+    }
+    .activity-title {
+        font-size: 16px;
+        font-weight: 600;
+        color: #2d3748;
+        margin-bottom: 6px;
+    }
+    .activity-description {
+        font-size: 14px;
+        color: #718096;
+        margin-bottom: 8px;
+    }
+    .activity-description code {
+        background: #edf2f7;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-family: 'Courier New', monospace;
+    }
+    .activity-time {
+        font-size: 12px;
+        color: #a0aec0;
+        font-weight: 500;
+    }
+    .actions-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+    }
+    .action-card {
+        background: white;
+        border: 2px solid #e2e8f0;
+        border-radius: 16px;
+        padding: 24px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        text-align: center;
+    }
+    .action-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+        border-color: #667eea;
+    }
+    .action-icon {
+        font-size: 40px;
+        margin-bottom: 12px;
+    }
+    .action-title {
+        font-size: 16px;
+        font-weight: 600;
+        color: #2d3748;
+        margin-bottom: 6px;
+    }
+    .action-desc {
+        font-size: 13px;
+        color: #718096;
+    }
+</style>
+
+<div class="dashboard-header">
+    <h2>👋 Welcome, <%= user.username %>!</h2>
+    <p>Your secure dashboard overview</p>
+</div>
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-icon">👤</div>
+        <div class="stat-content">
+            <div class="stat-label">Username</div>
+            <div class="stat-value"><%= user.username %></div>
+        </div>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-icon">🎭</div>
+        <div class="stat-content">
+            <div class="stat-label">Role</div>
+            <div class="stat-value"><span class="badge" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;"><%= user.role %></span></div>
+        </div>
+    </div>
+    
+    <div class="stat-card <%= device && device.trusted_status === 'trusted' ? 'trusted' : 'untrusted' %>">
+        <div class="stat-icon"><%= device && device.trusted_status === 'trusted' ? '✓' : '⚠' %></div>
+        <div class="stat-content">
+            <div class="stat-label">Device Status</div>
+            <div class="stat-value">
+                <% if (device && device.trusted_status === 'trusted') { %>
+                    <span class="badge badge-trusted">Trusted Device</span>
+                <% } else { %>
+                    <span class="badge badge-untrusted">Untrusted Device</span>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="activity-section">
+    <h3>📊 Recent Activity</h3>
+    <div class="activity-card">
+        <div class="activity-icon">🔐</div>
+        <div class="activity-content">
+            <div class="activity-title">Successful Login</div>
+            <div class="activity-description">You logged in from device: <code><%= deviceFingerprint.substring(0, 24) %>...</code></div>
+            <div class="activity-time">Just now</div>
+        </div>
+    </div>
+</div>
+
+<div class="quick-actions">
+    <h3>⚡ Quick Actions</h3>
+    <div class="actions-grid">
+        <a href="/reports" class="action-card">
+            <div class="action-icon">📊</div>
+            <div class="action-title">View Reports</div>
+            <div class="action-desc">Access system reports and analytics</div>
+        </a>
+        <% if (user.role === 'admin') { %>
+        <a href="/admin" class="action-card">
+            <div class="action-icon">🛡️</div>
+            <div class="action-title">Admin Panel</div>
+            <div class="action-desc">Manage devices and permissions</div>
+        </a>
+        <% } %>
+    </div>
+</div>

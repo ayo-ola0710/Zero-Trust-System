@@ -1,0 +1,186 @@
+<div class="pending-container">
+    <div class="pending-icon">⚠️</div>
+    <h1>Device Pending Approval</h1>
+    <p class="pending-subtitle">
+        Your device is authenticated but requires administrator approval to access protected resources
+    </p>
+    
+    <div class="device-info-card">
+        <div class="info-header">
+            <span class="info-icon">🔑</span>
+            <h3>Device Information</h3>
+        </div>
+        <div class="info-row">
+            <span class="info-label">Fingerprint:</span>
+            <code class="info-value"><%= deviceFingerprint %></code>
+        </div>
+        <div class="info-row">
+            <span class="info-label">Status:</span>
+            <span class="badge badge-untrusted">⏳ Pending Approval</span>
+        </div>
+    </div>
+
+    <div class="instructions-card">
+        <h4>📋 Next Steps</h4>
+        <ol>
+            <li>Copy your device fingerprint above</li>
+            <li>Contact your system administrator</li>
+            <li>Provide the fingerprint for verification</li>
+            <li>Wait for approval notification</li>
+        </ol>
+    </div>
+    
+    <div class="action-buttons">
+        <a href="/dashboard" class="btn-secondary">← Return to Dashboard</a>
+        <button onclick="copyFingerprint()" class="btn-primary">📋 Copy Fingerprint</button>
+    </div>
+</div>
+
+<style>
+    .pending-container {
+        text-align: center;
+        padding: 40px 20px;
+        max-width: 700px;
+        margin: 0 auto;
+    }
+    .pending-icon {
+        font-size: 80px;
+        margin-bottom: 20px;
+        animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.1); opacity: 0.8; }
+    }
+    .pending-container h1 {
+        font-size: 32px;
+        color: #2d3748;
+        margin-bottom: 12px;
+    }
+    .pending-subtitle {
+        font-size: 16px;
+        color: #718096;
+        margin-bottom: 40px;
+        line-height: 1.6;
+    }
+    .device-info-card {
+        background: linear-gradient(135deg, rgba(255, 234, 167, 0.2) 0%, rgba(253, 203, 110, 0.2) 100%);
+        border: 2px solid #ffeaa7;
+        border-radius: 16px;
+        padding: 30px;
+        margin-bottom: 30px;
+        text-align: left;
+    }
+    .info-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid #ffeaa7;
+    }
+    .info-icon {
+        font-size: 28px;
+    }
+    .info-header h3 {
+        margin: 0;
+        color: #2d3748;
+        font-size: 20px;
+    }
+    .info-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 0;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+    .info-label {
+        font-weight: 600;
+        color: #4a5568;
+        font-size: 14px;
+    }
+    .info-value {
+        background: white;
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-size: 13px;
+        font-family: 'Courier New', monospace;
+        color: #2d3748;
+        word-break: break-all;
+        flex: 1;
+        text-align: right;
+    }
+    .instructions-card {
+        background: white;
+        border: 2px solid #e2e8f0;
+        border-radius: 16px;
+        padding: 30px;
+        margin-bottom: 30px;
+        text-align: left;
+    }
+    .instructions-card h4 {
+        color: #2d3748;
+        font-size: 18px;
+        margin-bottom: 16px;
+    }
+    .instructions-card ol {
+        margin-left: 20px;
+        color: #4a5568;
+        line-height: 2;
+    }
+    .instructions-card li {
+        margin-bottom: 8px;
+    }
+    .action-buttons {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    .btn-primary, .btn-secondary {
+        padding: 14px 28px;
+        border-radius: 12px;
+        font-size: 15px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        border: none;
+    }
+    .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    }
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    }
+    .btn-secondary {
+        background: white;
+        color: #667eea;
+        border: 2px solid #667eea;
+    }
+    .btn-secondary:hover {
+        background: #667eea;
+        color: white;
+        transform: translateY(-2px);
+    }
+</style>
+
+<script>
+    function copyFingerprint() {
+        const fingerprint = '<%= deviceFingerprint %>';
+        navigator.clipboard.writeText(fingerprint).then(() => {
+            const btn = event.target;
+            const originalText = btn.textContent;
+            btn.textContent = '✓ Copied!';
+            btn.style.background = 'linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%)';
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+            }, 2000);
+        });
+    }
+</script>

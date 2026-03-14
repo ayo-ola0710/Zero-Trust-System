@@ -28,6 +28,7 @@ export const initDb = () => {
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 user_id INTEGER NOT NULL,
                 resource_accessed TEXT NOT NULL,
+                status TEXT NOT NULL,
                 access_time DATETIME DEFAULT CURRENT_TIMESTAMP,
                 FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
             );
